@@ -174,6 +174,32 @@ class LinkedList:
         self.length -= 1
         return node
 
+    def reverse(self):
+        """
+        Sample Linked List:
+        11 -> 3 -> 32 -> 7
+        0     1    2     3
+
+        self.reverse(2)
+        7 -> 32 -> 3 -> 11
+        0     1    2    3
+
+        :return: reversed Linked List
+        """
+        temp = self.head
+        self.head = self.tail
+        self.tail = temp
+
+        before = None
+
+        for _ in range(self.length):
+            after = temp.next
+            temp.next = before
+
+            before = temp
+            temp = after
+
+        return self
 
     @property
     def print_list(self) -> List:
@@ -229,5 +255,10 @@ if __name__ == "__main__":
     print(my_linked_list.print_list)
     print("-----" * 10)
 
-    print(my_linked_list.delete(4).value)
+    print(my_linked_list.delete(2).value)
     print(my_linked_list.print_list)
+    print("-----" * 10)
+
+    my_linked_list.reverse()
+    print(my_linked_list.print_list)
+    print("-----" * 10)
