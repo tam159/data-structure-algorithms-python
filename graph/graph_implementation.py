@@ -22,8 +22,17 @@ class Graph:
 
         return True
 
-    # O(E)
     def remove_edge(self, vertex1, vertex2) -> bool:
+        """
+        Remove an edge from vertex x.
+        O(M) = O(deg(x)) ~ O(E), deg(x) = outdegree of x = the numbers of neighbors of x
+        Worst case = O(V) when x has V-1 neighbors
+        -> in sparse graphs the operation is faster
+
+        :param vertex1:
+        :param vertex2:
+        :return: True if remove successfully
+        """
         if vertex1 not in self.adj_list or vertex2 not in self.adj_list:
             return False
 
@@ -38,9 +47,9 @@ class Graph:
     # O(V + E)
     def remove_vertex(self, vertex) -> bool:
         if vertex in self.adj_list:
-            edges = self.adj_list[vertex]
-            for edge in edges:
-                self.adj_list[edge].remove(vertex)
+            neighbors = self.adj_list[vertex]
+            for neighbor in neighbors:
+                self.adj_list[neighbor].remove(vertex)
 
             del self.adj_list[vertex]
             return True
