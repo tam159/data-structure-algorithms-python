@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List
 
 
 class Node:
@@ -50,11 +50,78 @@ class BinarySearchTree:
         return False
 
     # O(n)
-    def min_value_node(self, current_node) -> Node:
+    def min_value_node(self, current_node: Node) -> Node:
         while current_node.left:
             current_node = current_node.left
 
         return current_node
+
+    @property
+    def breadth_first_search(self) -> List:
+        """Traverse the tree in breadth"""
+        output = []
+        queue = [self.root]
+
+        while queue:
+            output.append(queue[0].value)
+            if queue[0].left:
+                queue.append(queue[0].left)
+            if queue[0].right:
+                queue.append(queue[0].right)
+            queue.pop(0)
+
+        return output
+
+    def dfs_pre_order(self, current_node: Node = None) -> List:
+        """Traverse the tree in pre-order depth"""
+        output = []
+
+        if not current_node:
+            current_node = self.root
+
+        output.append(current_node.value)
+
+        if current_node.left:
+            output.extend(self.dfs_pre_order(current_node.left))
+
+        if current_node.right:
+            output.extend(self.dfs_pre_order(current_node.right))
+
+        return output
+
+    def dfs_post_order(self, current_node: Node = None) -> List:
+        """Traverse the tree in post-order depth"""
+        output = []
+
+        if not current_node:
+            current_node = self.root
+
+        if current_node.left:
+            output.extend(self.dfs_post_order(current_node.left))
+
+        if current_node.right:
+            output.extend(self.dfs_post_order(current_node.right))
+
+        output.append(current_node.value)
+
+        return output
+
+    def dfs_in_order(self, current_node: Node = None) -> List:
+        """Traverse the tree in in-order depth"""
+        output = []
+
+        if not current_node:
+            current_node = self.root
+
+        if current_node.left:
+            output.extend(self.dfs_in_order(current_node.left))
+
+        output.append(current_node.value)
+
+        if current_node.right:
+            output.extend(self.dfs_in_order(current_node.right))
+
+        return output
 
 
 if __name__ == "__main__":
@@ -76,3 +143,8 @@ if __name__ == "__main__":
 
     print(my_tree.min_value_node(my_tree.root).value)
     print(my_tree.min_value_node(my_tree.root.right).value)
+
+    print(my_tree.breadth_first_search)
+    print(my_tree.dfs_pre_order())
+    print(my_tree.dfs_post_order())
+    print(my_tree.dfs_in_order())
